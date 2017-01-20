@@ -788,11 +788,14 @@ def filter_fusion(bwt_idx_prefix, params):
 
             same = False
             for chr_coord in left_chrs:
-                chr, coord = chr_coord.split(':')
-                coord = int(coord)
-                if chr == chr2 and abs(coord - coord2) < max_intron_len:
-                    same = True
-                    break
+								try:
+									chr, coord = chr_coord.split(':')
+									coord = int(coord)
+									if chr == chr2 and abs(coord - coord2) < max_intron_len:
+										same = True
+										break
+								except ValueError:
+									print >> sys.stderr, "Ignoring: malformed coordinates:[ %s ]" %(chr_coord)
 
             if same:
                 continue
